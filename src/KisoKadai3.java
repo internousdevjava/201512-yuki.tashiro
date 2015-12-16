@@ -16,7 +16,9 @@ public class KisoKadai3 {
 		int mincmd = 1;
 		boolean b = true;
 		do{
-			System.out.println("メニュー");
+			System.out.println("===================================================");
+			System.out.println();
+			System.out.println();
 			System.out.println("1-テキストファイルを新規作成");
 			System.out.println("2-テキストファイルを読み込み");
 			System.out.println("3-テキストファイルを編集");
@@ -25,6 +27,7 @@ public class KisoKadai3 {
 			System.out.println("終了する場合はzを入力してください。");
 			cmd = checkNumber(mincmd, maxcmd);
 			do{
+				b = true;
 				switch(cmd){
 				case 1:
 					String folder = findFolder(false);
@@ -50,7 +53,15 @@ public class KisoKadai3 {
 					}
 					break;
 				case 4:
-					String file2 = findFolder(true);
+					int selectTarget = selectTarget(false);
+					String file2 = null;
+					if(selectTarget == 1){
+						file2 = findFolder(false);
+					}else if(selectTarget == 2){
+						file2 = findFolder(true);
+					}else{
+						break;
+					}
 					if(!file2.equals("z")){
 						b = deleteFile(file2);
 					}
@@ -103,6 +114,9 @@ public class KisoKadai3 {
 		String path = "C:\\";
 		do{
 			do{
+				System.out.println("===================================================");
+				System.out.println();
+				System.out.println();
 				System.out.println("現在のフォルダは"+ path + "です。");
 				System.out.println("開きたいフォルダの番号を指定してください。");
 				File dir = new File(path);
@@ -174,6 +188,10 @@ public class KisoKadai3 {
 		boolean b = true;
 		boolean o = false;
 		do{
+				o = false;
+				System.out.println("===================================================");
+				System.out.println();
+				System.out.println();
 				System.out.println(folder + "に作成したいファイル名を入力してください。(.tｘｔは必要ありません)");
 				System.out.println("z-メニューに戻る");
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -200,7 +218,7 @@ public class KisoKadai3 {
 							b = false;
 						}
 					} catch (IOException e) {
-						System.out.println(e);
+						System.out.println("ファイルの作成に失敗しました");
 						b = false;
 					}
 				}
@@ -211,6 +229,10 @@ public class KisoKadai3 {
 		boolean b = true;
 		boolean o = false;
 		do{
+				o = false;	
+				System.out.println("===================================================");
+				System.out.println();
+				System.out.println();
 				System.out.println(folder + "に作成したいフォルダ名を入力してください。");
 				System.out.println("z-メニューに戻る");
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -242,6 +264,9 @@ public class KisoKadai3 {
 	public static boolean readFile(String file){
 		boolean b = true;
 		BufferedReader inFile = null;
+		System.out.println("===================================================");
+		System.out.println();
+		System.out.println();
 		try {
 			inFile = new BufferedReader(new InputStreamReader(new FileInputStream(file),"MS932"));
 		} catch (FileNotFoundException e) {
@@ -267,6 +292,9 @@ public class KisoKadai3 {
 		int cmd = 0;
 		boolean f = true;
 		boolean b = true;
+		System.out.println("===================================================");
+		System.out.println();
+		System.out.println();
 		System.out.println("編集方法を指定してください。");
 		System.out.println("1-上書き");
 		System.out.println("2-追記");
@@ -287,6 +315,9 @@ public class KisoKadai3 {
 				System.out.println("ファイルに書き込めません");
 				b = false;
 			}
+			System.out.println("===================================================");
+			System.out.println();
+			System.out.println();
 			System.out.println("テキストを入力してください。");
 			System.out.println("z-メニューに戻る");
 			try {
@@ -319,9 +350,9 @@ public class KisoKadai3 {
 		switch(checkNumber(1,2)){
 		case 1:
 			if(newfile.delete()){
-				System.out.println("ファイルを削除しました。");
+				System.out.println("削除しました。");
 			}else{
-				System.out.println("ファイル削除が失敗しました。");
+				System.out.println("削除失敗しました。");
 				b = false;
 			}
 			break;
@@ -331,15 +362,14 @@ public class KisoKadai3 {
 		}
 		return b;
 	}
-	public static boolean deleteFolder(String file){
-		return false;
-		
-	}
 	public static int selectTarget(boolean f){
 		String s = "作成";
 		if(!f){
 			s = "削除";
 		}
+		System.out.println("===================================================");
+		System.out.println();
+		System.out.println();
 		System.out.println(s + "対象を選択してください。");
 		System.out.println("1-フォルダ");
 		System.out.println("2-ファイル");
