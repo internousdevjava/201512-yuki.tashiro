@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KisoKadai3 {
+	
 	public static void main(String[] args) throws Exception {
 		int cmd = 0;
 		int maxcmd = 4;

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class KisoKadai1 {
+	
 	public static void main(String[] args) throws Exception {
 		System.out.println("九九表を作ります。");
 		String s = "x";

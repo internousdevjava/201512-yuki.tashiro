@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class KisoKadai2 {
+	
 	public static void main(String[] args) throws Exception {
 		Random rnd = new Random();
 		int answer = rnd.nextInt(99) + 1;
