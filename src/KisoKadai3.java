@@ -20,10 +20,10 @@ public class KisoKadai3 {
 			System.out.println("===================================================");
 			System.out.println();
 			System.out.println();
-			System.out.println("1-テキストファイルを新規作成");
+			System.out.println("1-フォルダ/ファイルを新規作成");
 			System.out.println("2-テキストファイルを読み込み");
 			System.out.println("3-テキストファイルを編集");
-			System.out.println("4-テキストファイルを削除");
+			System.out.println("4-フォルダ/ファイルを削除");
 			System.out.println("1～4を選択してください。");
 			System.out.println("終了する場合はzを入力してください。");
 			cmd = checkNumber(mincmd, maxcmd);
@@ -45,6 +45,18 @@ public class KisoKadai3 {
 					String file = findFolder(true);
 					if(!file.equals("z")){
 						b = readFile(file);
+						if(b){
+							System.out.println("===================================================");
+							System.out.println();
+							System.out.println();
+							System.out.println("このテキストファイルを編集しますか？");
+							System.out.println("1-はい");
+							System.out.println("2-いいえ");
+							int cmd1 = checkNumber(1, 2);
+							if(cmd1 == 1){
+								b = updateFile(file);
+							}
+						}
 					}
 					break;
 				case 3:
@@ -119,7 +131,7 @@ public class KisoKadai3 {
 				System.out.println();
 				System.out.println();
 				System.out.println("現在のフォルダは"+ path + "です。");
-				System.out.println("開きたいフォルダの番号を指定してください。");
+				System.out.println("開きたいフォルダ/ファイルの番号を指定してください。");
 				File dir = new File(path);
 				System.out.println("");
 				System.out.println("--" + path + "内のフォルダ一覧--");
@@ -137,6 +149,7 @@ public class KisoKadai3 {
 					}
 				}catch(NullPointerException e){
 					System.out.println("そのフォルダは開けませんでした。");
+					System.out.println("フォルダを選択しなおしてください。");
 					cmd = -1;
 					path = "C:\\";
 					break;
@@ -188,6 +201,7 @@ public class KisoKadai3 {
 	public static boolean createFile(String folder){
 		boolean b = true;
 		boolean o = false;
+		String str = null;
 		do{
 				o = false;
 				System.out.println("===================================================");
@@ -196,7 +210,7 @@ public class KisoKadai3 {
 				System.out.println(folder + "に作成したいファイル名を入力してください。(.tｘｔは必要ありません)");
 				System.out.println("z-メニューに戻る");
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				String str = null;
+				str = null;
 				try {
 					str = br.readLine();
 				} catch (IOException e1) {
@@ -224,11 +238,24 @@ public class KisoKadai3 {
 					}
 				}
 		}while(o);
+		if(b){
+			System.out.println("===================================================");
+			System.out.println();
+			System.out.println();
+			System.out.println("このファイルにテキストを入力しますか？");
+			System.out.println("1-はい");
+			System.out.println("2-いいえ");
+			int cmd = checkNumber(1, 2);
+			if(cmd == 1){
+				b = updateFile(folder + "\\" + str + ".txt");
+			}
+		}
 		return b;
 	}
 	public static boolean createFolder(String folder){
 		boolean b = true;
 		boolean o = false;
+		String str = null;
 		do{
 				o = false;	
 				System.out.println("===================================================");
@@ -237,7 +264,7 @@ public class KisoKadai3 {
 				System.out.println(folder + "に作成したいフォルダ名を入力してください。");
 				System.out.println("z-メニューに戻る");
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				String str = null;
+				str = null;
 				try {
 					str = br.readLine();
 				} catch (IOException e1) {
@@ -260,6 +287,18 @@ public class KisoKadai3 {
 					}
 				}
 		}while(o);
+		if(b){
+			System.out.println("===================================================");
+			System.out.println();
+			System.out.println();
+			System.out.println("このフォルダにテキストファイルを作成しますか？");
+			System.out.println("1-はい");
+			System.out.println("2-いいえ");
+			int cmd = checkNumber(1, 2);
+			if(cmd == 1){
+				b = createFile(folder + "\\" + str);
+			}
+		}
 		return b;
 	}
 	public static boolean readFile(String file){
@@ -287,6 +326,8 @@ public class KisoKadai3 {
 			System.out.println("そのファイルは開けませんでした。");
 			b = false;
 		}
+		System.out.println();
+		System.out.println();
 		return b;
 	}
 	public static boolean updateFile(String file){
@@ -320,6 +361,7 @@ public class KisoKadai3 {
 			System.out.println();
 			System.out.println();
 			System.out.println("テキストを入力してください。");
+			System.out.println("0-ファイル内容を確認する");
 			System.out.println("z-メニューに戻る");
 			try {
 			do{
@@ -328,10 +370,23 @@ public class KisoKadai3 {
 				if(str.equals("z")){
 					break;
 				}
-				filewriter.write(str + "\n");
-				f = true;
-				System.out.println("次の行を入力してください。");
-				System.out.println("z-メニューに戻る");
+				if(str.equals("0")){
+					b = readFile(file);
+					if(!b){
+						break;
+					}
+					System.out.println("===================================================");
+					System.out.println("次の行を入力してください。");
+					System.out.println("0-ファイル内容を確認する");
+					System.out.println("z-メニューに戻る");
+				}else{
+					filewriter.write(str + "\n");
+					filewriter.close();
+					filewriter = new FileWriter(targetfile, true);
+					System.out.println("次の行を入力してください。");
+					System.out.println("0-ファイル内容を確認する");
+					System.out.println("z-メニューに戻る");
+				}
 			}while(true);	
 				filewriter.close();
 			}catch (IOException e) {
@@ -344,6 +399,9 @@ public class KisoKadai3 {
 	public static boolean deleteFile(String file){
 		boolean b = true;
 		File newfile = new File(file);
+		System.out.println("===================================================");
+		System.out.println();
+		System.out.println();
 		System.out.println(file + "を削除してもいいですか？");
 		System.out.println("1-はい");
 		System.out.println("2-いいえ");
